@@ -1,19 +1,23 @@
+import os
 from pathlib import Path
 
-# Build paths inside the project like this: BASE_DIR / 'subdir'.
+from dotenv import load_dotenv
+
+load_dotenv()
+
 BASE_DIR = Path(__file__).resolve().parent.parent
-
-
-# Quick-start development settings - unsuitable for production
-# See https://docs.djangoproject.com/en/5.2/howto/deployment/checklist/
-
-# SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'django-insecure-_1znwzxwiv)k%&2!qulux^=f&h^ec304lr@hs4%j_+w*3$o9i9'
+SECRET_KEY = os.getenv("SECRET_KEY")
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = True if os.getenv("DEBUG") == "True" else False
+ALLOWED_HOSTS = ["localhost", "192.168.1.2"]
 
-ALLOWED_HOSTS = []
+# Users config
+LOGIN_URL = "users:login"
+AUTH_USER_MODEL = "users."
+
+LOGIN_REDIRECT_URL = ""
+LOGOUT_REDIRECT_URL = "users:login"
 
 
 # Application definition
@@ -57,13 +61,29 @@ TEMPLATES = [
 WSGI_APPLICATION = 'Vusets_Generics.wsgi.application'
 
 
-# Database
-# https://docs.djangoproject.com/en/5.2/ref/settings/#databases
 
+# Email setings
+EMAIL_BACKEND = os.getenv("EMAIL_BACKEND")
+EMAIL_HOST = os.getenv("EMAIL_HOST", default="smtp.yandex.ru")
+EMAIL_PORT = os.getenv("EMAIL_PORT", default="465")
+EMAIL_USE_TLS = True if os.getenv("EMAIL_USE_TLS") == "True" else False
+EMAIL_USE_SSL = True if os.getenv("EMAIL_USE_SSL") == "True" else False
+EMAIL_HOST_USER = os.getenv("EMAIL_HOST_USER", default="gorscheneow2018@yandex.ru")
+EMAIL_HOST_PASSWORD = os.getenv("EMAIL_HOST_PASSWORD")
+DEFAULT_FROM_EMAIL = os.getenv(
+    "DEFAULT_FROM_EMAIL", default="gorscheneow2018@yandex.ru"
+)
+
+
+# Database
 DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
+    "default": {
+        "ENGINE": "django.db.backends.postgresql_psycopg2",
+        "PORT": os.getenv("DATABASE_PORT", default="5432"),
+        "NAME": os.getenv("DATABASE_NAME", default="Vusets_Generics"),
+        "USER": os.getenv("DATABASE_USER", default="postgres"),
+        "HOST": os.getenv("DATABASE_HOST", default="localhost"),
+        "PASSWORD": os.getenv("DATABASE_PASSWORD"),
     }
 }
 
@@ -94,17 +114,30 @@ LANGUAGE_CODE = 'en-us'
 
 TIME_ZONE = 'UTC'
 
+USE_L10N = True
+
 USE_I18N = True
 
 USE_TZ = True
 
 
 # Static files (CSS, JavaScript, Images)
-# https://docs.djangoproject.com/en/5.2/howto/static-files/
+STATIC_URL = "/static/"
 
-STATIC_URL = 'static/'
+STATICFILES_DIRS = [BASE_DIR / "static"]
+
+MEDIA_URL = "/media/"
+
+MEDIA_ROOT = os.path.join(BASE_DIR, "media")
 
 # Default primary key field type
-# https://docs.djangoproject.com/en/5.2/ref/settings/#default-auto-field
-
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+CACHES = {
+    "default": {
+        "BACKEND": os.getenv(
+            "BACKEND", default="django.core.cache.backends.redis.RedisCache"
+        ),
+        "LOCATION": os.getenv("LOCATION", default="redis://127.0.0.1:6379/1"),
+    }
+}
