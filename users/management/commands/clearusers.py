@@ -11,8 +11,6 @@ class Command(BaseCommand):
         for user in users:
             user.delete()
             if user:
-                self.stdout.write(
-                    self.style.SUCCESS(f"Successfully delete: {user}")
-                )
+                self.stdout.write(self.style.SUCCESS(f"Successfully delete: {user}"))
             else:
                 self.stdout.write(self.style.WARNING("User already not exists"))

@@ -58,7 +58,7 @@ class UserCreateForm(UserCreationForm):
                 "class": "input-group rounded-2 mb-2",
             }
         )
-        self.fields["city"].widget.attrs.update(
+        self.fields["phone_number"].widget.attrs.update(
             {
                 "class": "form-control rounded-2 mb-4",
                 "placeholder": "Введите номер телефона",

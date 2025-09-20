@@ -19,16 +19,14 @@ class User(AbstractUser):
     #           Пользователь получит все разрешения, предоставленные каждой из его групп
     # "user_permissions" - Конкретные разрешения для этого пользователя
     email = models.EmailField(unique=True, verbose_name="Почта")
-    
+
     avatar = models.ImageField(
         upload_to="users/",
         verbose_name="Фотография",
         null=True,
     )
     phone_number = models.CharField(max_length=15, blank=True, null=True)
-    city = models.CharField(
-        max_length=15, blank=True, null=True, verbose_name="Город"
-    )
+    city = models.CharField(max_length=15, blank=True, null=True, verbose_name="Город")
 
     USERNAME_FIELD = "email"
     REQUIRED_FIELDS = [
