@@ -43,14 +43,15 @@ class MainView(ListView):
     context_object_name = "newsletters"
 
     def get_queryset(self):
-        queryset = cache.get("ProductListView_queryset")
+        queryset = cache.get("main")
         if not queryset:
             queryset = super().get_queryset()
-        #     cache.set("authors_queryset", queryset, 60 * 15)
+            queryset["lessons"] = Lesson.objects.all()
+        #     cache.set("main", queryset, 60 * 15)
         return queryset
 
 
-# Message API views
+# Lesson API views
 class MessageListAPI(generics.ListAPIView):
     serializer_class = CourseSerializer
     queryset = Course.objects.all()
@@ -60,4 +61,4 @@ class AttemptSendCreateAPI(generics.CreateAPIView):
     serializer_class = CourseSerializer
 
 
-# New class
+# Lesson API views
