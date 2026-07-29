@@ -14,6 +14,7 @@ class Lesson(models.Model):
     video_link = models.CharField(verbose_name="Сылка на видео")
 
 
+
 class Course(models.Model):
     title = models.CharField(verbose_name="Название курса")
     preview = models.ImageField(
@@ -22,6 +23,6 @@ class Course(models.Model):
     description = models.CharField(
         blank=True, default="Без опиcания", verbose_name="Описание курса"
     )
-    lessons = models.ManyToManyField(
-        Lesson, verbose_name="Получатели рассылки", null=True, blank=True
+    lessons = models.ManyToManyField(Lesson, verbose_name="Уроки курса", blank=True
     )
+    students = models.ManyToManyField(User, verbose_name="Ученики", blank=True)

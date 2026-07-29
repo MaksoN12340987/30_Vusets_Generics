@@ -1,5 +1,6 @@
 import os
 from pathlib import Path
+from api.apps import ApiConfig
 from users.apps import UsersConfig
 from syllabus.apps import SyllabusConfig
 
@@ -12,7 +13,7 @@ SECRET_KEY = os.getenv("SECRET_KEY")
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True if os.getenv("DEBUG") == "True" else False
-ALLOWED_HOSTS = ["localhost", "192.168.1.2"]
+ALLOWED_HOSTS = ["192.168.0.149", "192.168.1.2", "127.0.0.1"]
 
 # Users config
 LOGIN_URL = "syllabus:main"
@@ -31,8 +32,10 @@ INSTALLED_APPS = [
     "django.contrib.sessions",
     "django.contrib.messages",
     "django.contrib.staticfiles",
+    "rest_framework",
     f"{UsersConfig.name}",
     f"{SyllabusConfig.name}",
+    f"{ApiConfig.name}",
 ]
 
 MIDDLEWARE = [
