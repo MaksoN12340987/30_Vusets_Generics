@@ -7,27 +7,29 @@ class Migration(migrations.Migration):
 
     initial = True
 
-    dependencies = [
-    ]
+    dependencies = []
 
     operations = [
         migrations.CreateModel(
-            name='Course',
+            name="Course",
             fields=[
-                ('id', models.BigAutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
-                ('title', models.CharField(verbose_name='Название курса')),
-                ('preview', models.ImageField(blank=True, null=True, upload_to='couse/', verbose_name='Фотография')),
-                ('description', models.CharField(blank=True, default='Без опиcания', verbose_name='Описание курса')),
+                ("id", models.BigAutoField(auto_created=True, primary_key=True, serialize=False, verbose_name="ID")),
+                ("title", models.CharField(verbose_name="Название курса")),
+                ("preview", models.ImageField(blank=True, null=True, upload_to="couse/", verbose_name="Фотография")),
+                ("description", models.CharField(blank=True, default="Без опиcания", verbose_name="Описание курса")),
             ],
         ),
         migrations.CreateModel(
-            name='Lesson',
+            name="Lesson",
             fields=[
-                ('id', models.BigAutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
-                ('title', models.CharField(verbose_name='Название урока')),
-                ('description', models.CharField(blank=True, default='Добавьте опиcание', verbose_name='Описание урока')),
-                ('preview', models.ImageField(blank=True, null=True, upload_to='lesson/', verbose_name='Фотография')),
-                ('video_link', models.CharField(verbose_name='Сылка на видео')),
+                ("id", models.BigAutoField(auto_created=True, primary_key=True, serialize=False, verbose_name="ID")),
+                ("title", models.CharField(verbose_name="Название урока")),
+                (
+                    "description",
+                    models.CharField(blank=True, default="Добавьте опиcание", verbose_name="Описание урока"),
+                ),
+                ("preview", models.ImageField(blank=True, null=True, upload_to="lesson/", verbose_name="Фотография")),
+                ("video_link", models.CharField(verbose_name="Сылка на видео")),
             ],
         ),
     ]

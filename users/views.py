@@ -71,10 +71,8 @@ class UpdateProfile(LoginRequiredMixin, UpdateView):
     context_object_name = "user"
 
     def post(self, request, *args, **kwargs) -> HttpResponse:
-        if not request.user.has_perm("change_baseuser"):
-            return HttpResponseForbidden(
-                "У вас нет прав для обновления данных пользователя."
-            )
+        if not request.user.has_perm("change_baseuser"): # type: ignore
+            return HttpResponseForbidden("У вас нет прав для обновления данных пользователя.")
 
         return super().post(request, *args, **kwargs)
 

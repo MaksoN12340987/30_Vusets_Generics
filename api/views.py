@@ -1,10 +1,9 @@
 import logging
 
-from users.models import User
-
 from rest_framework import generics
 
 from syllabus.models import Course, Lesson
+from users.models import User
 
 from .serializers import CourseSerializer, LessonSerializer
 
@@ -23,9 +22,11 @@ class ListAPI(generics.ListAPIView):
     serializer_class = CourseSerializer
     queryset = Course.objects.all(), Lesson.objects.all()
 
+
 class ListAPICourses(generics.ListAPIView):
     serializer_class = CourseSerializer
     queryset = Course.objects.all()
+
 
 class ListAPILessons(generics.ListAPIView):
     serializer_class = CourseSerializer

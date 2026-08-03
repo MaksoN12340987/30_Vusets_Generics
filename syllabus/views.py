@@ -5,21 +5,12 @@ from django.core.cache import cache
 from django.forms import BaseModelForm
 from django.http import HttpResponse
 from django.urls import reverse_lazy
-from django.views.generic import (
-    CreateView,
-    DeleteView,
-    DetailView,
-    ListView,
-    UpdateView,
-)
+from django.views.generic import CreateView, DeleteView, DetailView, ListView, UpdateView
+from rest_framework import generics
 
 from users.models import User
 
-from rest_framework import generics
-
-from .models import Course, Lesson
-
-from .forms import Create
+from .forms import CreateCourse, CreateLesson
 from .models import Course, Lesson
 from .services import SendingMessagesEmail
 
@@ -61,3 +52,17 @@ class MainView(ListView):
         context["count_user"] = len(User.objects.all())
 
         return context
+
+class CrateObjectLesson(CreateView):
+    model = Lesson
+    form_class = CreateLesson
+    template_name = "syllabus/create.html"
+    context_object_name = "Lesson"
+    success_url = reverse_lazy("syllabus:main")
+
+class CrateObjectCourse(CreateView):
+    model = Course
+    form_class = CreateCourse
+    template_name = "syllabus/create.html"
+    context_object_name = "Course"
+    success_url = reverse_lazy("syllabus:main")

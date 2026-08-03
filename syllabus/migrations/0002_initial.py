@@ -9,19 +9,19 @@ class Migration(migrations.Migration):
     initial = True
 
     dependencies = [
-        ('syllabus', '0001_initial'),
+        ("syllabus", "0001_initial"),
         migrations.swappable_dependency(settings.AUTH_USER_MODEL),
     ]
 
     operations = [
         migrations.AddField(
-            model_name='course',
-            name='students',
-            field=models.ManyToManyField(blank=True, to=settings.AUTH_USER_MODEL, verbose_name='Ученики'),
+            model_name="course",
+            name="students",
+            field=models.ManyToManyField(blank=True, to=settings.AUTH_USER_MODEL, verbose_name="Ученики"),
         ),
         migrations.AddField(
-            model_name='course',
-            name='lessons',
-            field=models.ManyToManyField(blank=True, to='syllabus.lesson', verbose_name='Уроки курса'),
+            model_name="course",
+            name="lessons",
+            field=models.ManyToManyField(blank=True, to="syllabus.lesson", verbose_name="Уроки курса"),
         ),
     ]

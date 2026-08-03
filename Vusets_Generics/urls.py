@@ -4,8 +4,8 @@ from django.contrib import admin
 from django.urls import include, path
 
 from api.apps import ApiConfig
-from users.apps import UsersConfig
 from syllabus.apps import SyllabusConfig
+from users.apps import UsersConfig
 
 urlpatterns = [
     path("admin/", admin.site.urls),
