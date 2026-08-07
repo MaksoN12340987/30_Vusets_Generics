@@ -4,10 +4,13 @@ from django.contrib.auth.mixins import LoginRequiredMixin
 from django.core.cache import cache
 from django.forms import BaseModelForm
 from django.http import HttpResponse
+from django.shortcuts import get_object_or_404
 from django.urls import reverse_lazy
 from django.views.generic import CreateView, DeleteView, DetailView, ListView, UpdateView
-from rest_framework import generics
+from rest_framework import generics, viewsets
+from rest_framework.response import Response
 
+from syllabus.serializers import CourseSerializer
 from users.models import User
 
 from .forms import CreateCourse, CreateLesson
@@ -31,18 +34,6 @@ class MainView(ListView):
     template_name = "syllabus/main.html"
     context_object_name = "lessons"
 
-    def get_queryset(self):
-        queryset = Lesson.objects.all()
-        # queryset["count_course"] = len(queryset)
-        logger_views.info(f"{queryset}")
-        # queryset["lessons"] = Lesson.objects.all()
-        # queryset = cache.get("main")
-        # if not queryset:
-        #     queryset = super().get_queryset()
-        #     queryset["lessons"] = Lesson.objects.all()
-        #     cache.set("main", queryset, 60 * 15)
-        return queryset
-
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context["count_course"] = len(Course.objects.all())
@@ -53,16 +44,43 @@ class MainView(ListView):
 
         return context
 
-class CrateObjectLesson(CreateView):
-    model = Lesson
-    form_class = CreateLesson
-    template_name = "syllabus/create.html"
-    context_object_name = "Lesson"
-    success_url = reverse_lazy("syllabus:main")
+# API Course
+class CourseViewSet(viewsets.ModelViewSet):
+    # queryset = Course.objects.all()
+    # serializer_class = CourseSerializer
+    def list(self, request):
+        # Метод для вывода списка пользователей с определением выборки из базы и указанием сериализатора
+        queryset = Course.objects.all()
+        serializer = CourseSerializer(queryset, many=True)
+        return Response(serializer.data)
 
-class CrateObjectCourse(CreateView):
-    model = Course
-    form_class = CreateCourse
-    template_name = "syllabus/create.html"
-    context_object_name = "Course"
-    success_url = reverse_lazy("syllabus:main")
+    def retrieve(self, request, pk=None):
+        # Метод для вывода информации по пользователю с определением выборки из базы и указанием сериализатора
+        queryset = Course.objects.all()
+        course = get_object_or_404(queryset, pk=pk)
+        serializer = CourseSerializer(course)
+        return Response(serializer.data)
+    
+    def update(self, request, pk=None):
+        queryset = Course.objects.all()
+        course = get_object_or_404(queryset, pk=pk)
+        
+        serializer = self.get_serializer(course, data=request.data, partial=partial)
+
+        serializer.is_valid(raise_exception=True)
+        self.perform_update(serializer)
+
+        return Response(serializer.data, status=status.HTTP_200_OK)
+    
+    def destroy(self, request, *args, **kwargs):
+        return super().destroy(request, *args, **kwargs)
+
+
+# API Lesson
+class ListLessonsAPI(generics.ListAPIView):
+    serializer_class = CourseSerializer
+    queryset = Lesson.objects.all()
+
+# class ObjectLessonsAPI(generics.):
+#     serializer_class = CourseSerializer
+#     queryset = Lesson.objects.all()

@@ -3,7 +3,6 @@ from pathlib import Path
 
 from dotenv import load_dotenv
 
-from api.apps import ApiConfig
 from syllabus.apps import SyllabusConfig
 from users.apps import UsersConfig
 
@@ -36,7 +35,6 @@ INSTALLED_APPS = [
     "rest_framework",
     f"{UsersConfig.name}",
     f"{SyllabusConfig.name}",
-    f"{ApiConfig.name}",
 ]
 
 MIDDLEWARE = [

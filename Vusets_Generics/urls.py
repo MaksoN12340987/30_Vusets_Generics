@@ -3,23 +3,18 @@ from django.conf.urls.static import static
 from django.contrib import admin
 from django.urls import include, path
 
-from api.apps import ApiConfig
 from syllabus.apps import SyllabusConfig
 from users.apps import UsersConfig
 
 urlpatterns = [
     path("admin/", admin.site.urls),
     path(
-        f"{SyllabusConfig.name}/",
+        f"",
         include(f"{SyllabusConfig.name}.urls", namespace=f"{SyllabusConfig.name}"),
     ),
     path(
         f"{UsersConfig.name}/",
         include(f"{UsersConfig.name}.urls", namespace=f"{UsersConfig.name}"),
-    ),
-    path(
-        "",
-        include(f"{ApiConfig.name}.urls", namespace=f"{ApiConfig.name}"),
     ),
 ]
 
