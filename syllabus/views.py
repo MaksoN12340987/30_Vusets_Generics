@@ -73,8 +73,26 @@ class CourseViewSet(viewsets.ViewSet):
         
         return Response(serializer.data)
     
-    # def destroy(self, request, *args, **kwargs):
-    #     return super().destroy(request, *args, **kwargs)
+    def destroy(self, request, pk=None):
+        queryset = Course.objects.all()
+        course = get_object_or_404(queryset, pk=pk)
+        
+        if course:
+            course.delete()        
+        
+        return Response(f'You destroy instance {request.data}')
+
+    # def create(self, request, pk=None):
+    #     queryset = Course.objects.all()
+    #     if not get_object_or_404(queryset, pk=pk):
+    #         serializer = CourseSerializer(course, request.data)
+        
+        
+    #     logger_views.info(f"{request}")
+        
+    #     if serializer.is_valid(raise_exception=True):
+    #         serializer.update(course, request.data)
+
 
 
 # API Lesson

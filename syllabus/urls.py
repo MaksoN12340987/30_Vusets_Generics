@@ -16,5 +16,5 @@ urlpatterns = [
     path("list_lessonss/", ListLessonsAPI.as_view(), name="list_lessonss"),
     
     # API ViewSet
-        path("course_viewset/", include(router.urls)),
+    path("course_viewset/", include(router.urls)),
 ]
