@@ -45,7 +45,7 @@ class MainView(ListView):
         return context
 
 # API Course
-class CourseViewSet(viewsets.ModelViewSet):
+class CourseViewSet(viewsets.ViewSet):
     # queryset = Course.objects.all()
     # serializer_class = CourseSerializer
     def list(self, request):
@@ -64,16 +64,17 @@ class CourseViewSet(viewsets.ModelViewSet):
     def update(self, request, pk=None):
         queryset = Course.objects.all()
         course = get_object_or_404(queryset, pk=pk)
+        serializer = CourseSerializer(course, request.data)
         
-        serializer = self.get_serializer(course, data=request.data, partial=partial)
-
-        serializer.is_valid(raise_exception=True)
-        self.perform_update(serializer)
-
-        return Response(serializer.data, status=status.HTTP_200_OK)
+        logger_views.info(f"{request}")
+        
+        if serializer.is_valid(raise_exception=True):
+            serializer.update(course, request.data)
+        
+        return Response(serializer.data)
     
-    def destroy(self, request, *args, **kwargs):
-        return super().destroy(request, *args, **kwargs)
+    # def destroy(self, request, *args, **kwargs):
+    #     return super().destroy(request, *args, **kwargs)
 
 
 # API Lesson
