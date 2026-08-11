@@ -46,16 +46,12 @@ class MainView(ListView):
 
 # API Course
 class CourseViewSet(viewsets.ViewSet):
-    # queryset = Course.objects.all()
-    # serializer_class = CourseSerializer
     def list(self, request):
-        # Метод для вывода списка пользователей с определением выборки из базы и указанием сериализатора
         queryset = Course.objects.all()
         serializer = CourseSerializer(queryset, many=True)
         return Response(serializer.data)
 
     def retrieve(self, request, pk=None):
-        # Метод для вывода информации по пользователю с определением выборки из базы и указанием сериализатора
         queryset = Course.objects.all()
         course = get_object_or_404(queryset, pk=pk)
         serializer = CourseSerializer(course)
@@ -71,7 +67,7 @@ class CourseViewSet(viewsets.ViewSet):
         if serializer.is_valid(raise_exception=True):
             serializer.update(course, request.data)
         
-        return Response(serializer.data)
+        return Response(request.data)
     
     def destroy(self, request, pk=None):
         queryset = Course.objects.all()
@@ -82,17 +78,14 @@ class CourseViewSet(viewsets.ViewSet):
         
         return Response(f'You destroy instance {request.data}')
 
-    # def create(self, request, pk=None):
-    #     queryset = Course.objects.all()
-    #     if not get_object_or_404(queryset, pk=pk):
-    #         serializer = CourseSerializer(course, request.data)
+    def create(self, request):
+        course = Course.objects.create()
+        serializer = CourseSerializer(course, request.data)
         
+        if serializer.is_valid(raise_exception=True):
+            serializer.save()
         
-    #     logger_views.info(f"{request}")
-        
-    #     if serializer.is_valid(raise_exception=True):
-    #         serializer.update(course, request.data)
-
+        return Response(request.data)
 
 
 # API Lesson
