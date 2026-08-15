@@ -1,7 +1,7 @@
 from django.urls import path
 
 from .apps import UsersConfig
-from .views import Login, Logout, UpdateProfile, UsersCreate, UsersList
+from .views import Login, Logout, UpdateProfile, UsersAPI, UsersCreate, UsersList
 
 app_name = UsersConfig.name
 
@@ -11,4 +11,7 @@ urlpatterns = [
     path("logout/", Logout.as_view(), name="logout"),
     path("list/", UsersList.as_view(), name="list"),
     path("profile/<int:pk>/", UpdateProfile.as_view(), name="profile"),
+    
+    # API
+    path("api/", UsersAPI.as_view(), name="api")
 ]

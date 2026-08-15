@@ -6,12 +6,7 @@ from .models import Course, Lesson
 class CreateLesson(forms.ModelForm):
     class Meta:
         model = Lesson
-        fields = [
-            "title",
-            "description",
-            "preview",
-            "video_link"
-        ]
+        fields = ["title", "description", "preview", "video_link"]
 
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
@@ -40,16 +35,11 @@ class CreateLesson(forms.ModelForm):
             }
         )
 
+
 class CreateCourse(forms.ModelForm):
     class Meta:
         model = Course
-        fields = [
-            "title",
-            "preview",
-            "description",
-            "lessons",
-            "students"
-        ]
+        fields = ["title", "preview", "description", "lessons", "students"]
 
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)

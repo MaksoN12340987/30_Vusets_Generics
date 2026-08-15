@@ -8,7 +8,7 @@ class Lesson(models.Model):
     description = models.CharField(blank=True, default="Опиcание скоро появится", verbose_name="Описание урока")
     preview = models.ImageField(upload_to="lesson/", verbose_name="Фотография", null=True, blank=True)
     video_link = models.CharField(verbose_name="Сылка на видео")
-    
+
     def __str__(self):
         return self.title
 

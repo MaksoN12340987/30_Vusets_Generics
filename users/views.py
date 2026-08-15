@@ -7,6 +7,9 @@ from django.core.mail import send_mail
 from django.http import HttpResponse, HttpResponseForbidden
 from django.urls import reverse_lazy
 from django.views.generic import CreateView, ListView, UpdateView
+from .serializers import UserSerializer
+from rest_framework import generics
+
 
 from .forms import AuthForm, RedactProfileForm, UserCreateForm
 from .models import User
@@ -45,24 +48,20 @@ class UsersCreate(CreateView):
 
         send_mail(subject, message, from_email, recipient_list)
 
-
 class UsersList(LoginRequiredMixin, PermissionRequiredMixin, ListView):
     model = User
     template_name = "users/list.html"
     context_object_name = "users"
     permission_required = "users.view_baseuser"
 
-
 class Login(LoginView):
     model = User
     form_class = AuthForm
     template_name = "users/log_in.html"
 
-
 class Logout(LogoutView):
     model = User
     template_name = "users/log_out.html"
-
 
 class UpdateProfile(LoginRequiredMixin, UpdateView):
     model = User
@@ -71,9 +70,15 @@ class UpdateProfile(LoginRequiredMixin, UpdateView):
     context_object_name = "user"
 
     def post(self, request, *args, **kwargs) -> HttpResponse:
-        if not request.user.has_perm("change_baseuser"): # type: ignore
+        if not request.user.has_perm("change_baseuser"):  # type: ignore
             return HttpResponseForbidden("У вас нет прав для обновления данных пользователя.")
 
         return super().post(request, *args, **kwargs)
 
     success_url = reverse_lazy("users:login")
+
+
+# API
+class UsersAPI(generics.ListAPIView):
+    serializer_class = UserSerializer
+    queryset = User.objects.all()

@@ -37,6 +37,7 @@ class MainView(ListView):
 
         return context
 
+
 # API Course
 class CourseViewSet(viewsets.ViewSet):
     def list(self, request):
@@ -47,7 +48,7 @@ class CourseViewSet(viewsets.ViewSet):
 
         Returns:
             Response: JSON
-        """        
+        """
         queryset = Course.objects.all()
         serializer = CourseSerializer(queryset, many=True)
         return Response(serializer.data)
@@ -66,7 +67,7 @@ class CourseViewSet(viewsets.ViewSet):
         course = get_object_or_404(queryset, pk=pk)
         serializer = CourseSerializer(course)
         return Response(serializer.data)
-    
+
     def update(self, request, pk=None):
         """Обновление объектa Cource
 
@@ -80,12 +81,12 @@ class CourseViewSet(viewsets.ViewSet):
         queryset = Course.objects.all()
         course = get_object_or_404(queryset, pk=pk)
         serializer = CourseSerializer(course, request.data)
-        
+
         logger_views.info(f"{request}")
-        
+
         if serializer.is_valid(raise_exception=True):
             serializer.update(course, request.data)
-        
+
         return Response(serializer.data)
 
     def create(self, request):
@@ -96,15 +97,15 @@ class CourseViewSet(viewsets.ViewSet):
 
         Returns:
             Response (json): data
-        """        
+        """
         course = Course.objects.create()
         serializer = CourseSerializer(course, request.data)
-        
+
         if serializer.is_valid(raise_exception=True):
             serializer.save()
-        
+
         return Response(serializer.data)
-    
+
     def destroy(self, request, pk=None):
         """Удаление объектa Cource
 
@@ -114,14 +115,14 @@ class CourseViewSet(viewsets.ViewSet):
 
         Returns:
             Response: delete status
-        """        
+        """
         queryset = Course.objects.all()
         course = get_object_or_404(queryset, pk=pk)
-        
+
         if course:
-            course.delete()        
-        
-        return Response(f'You destroy instance {request.data}')
+            course.delete()
+
+        return Response(f"You destroy instance {request.data}")
 
 
 # API Lesson
@@ -129,17 +130,21 @@ class ListLessonsAPI(generics.ListAPIView):
     serializer_class = CourseSerializer
     queryset = Lesson.objects.all()
 
+
 class LessonAPI(generics.RetrieveAPIView):
     serializer_class = CourseSerializer
     queryset = Lesson.objects.all()
+
 
 class UpdateLessonAPI(generics.UpdateAPIView):
     serializer_class = CourseSerializer
     queryset = Lesson.objects.all()
 
+
 class DeleteLessonAPI(generics.DestroyAPIView):
     serializer_class = CourseSerializer
     queryset = Lesson.objects.all()
+
 
 class CreateLessonAPI(generics.CreateAPIView):
     serializer_class = CourseSerializer
