@@ -1,7 +1,7 @@
 from django.urls import path
 
 from .apps import UsersConfig
-from .views import Login, Logout, UpdateProfile, UsersAPI, UsersCreate, UsersList
+from .views import Login, Logout, UpdateProfile, UsersAPI, UsersCreate, UsersList, UsersTrainingAPI
 
 app_name = UsersConfig.name
 
@@ -13,5 +13,6 @@ urlpatterns = [
     path("profile/<int:pk>/", UpdateProfile.as_view(), name="profile"),
     
     # API
-    path("api/", UsersAPI.as_view(), name="api")
+    path("api/", UsersAPI.as_view(), name="api"),
+    path("trining/", UsersTrainingAPI.as_view(), name="trining")
 ]

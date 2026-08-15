@@ -7,7 +7,7 @@ from django.core.mail import send_mail
 from django.http import HttpResponse, HttpResponseForbidden
 from django.urls import reverse_lazy
 from django.views.generic import CreateView, ListView, UpdateView
-from .serializers import UserSerializer
+from .serializers import UserSerializer, UserTrainingSerializer
 from rest_framework import generics
 
 
@@ -81,4 +81,8 @@ class UpdateProfile(LoginRequiredMixin, UpdateView):
 # API
 class UsersAPI(generics.ListAPIView):
     serializer_class = UserSerializer
+    queryset = User.objects.all()
+
+class UsersTrainingAPI(generics.ListAPIView):
+    serializer_class = UserTrainingSerializer
     queryset = User.objects.all()
