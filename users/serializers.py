@@ -1,5 +1,6 @@
 import logging
 from rest_framework import serializers
+from django.core.cache import cache
 
 from syllabus.serializers import CourseSerializer
 from users.models import User
@@ -21,7 +22,11 @@ class UserSerializer(serializers.ModelSerializer):
 
 class UserTrainingSerializer(serializers.ModelSerializer):
     # course = serializers.CharField(source='course_set.all')
-    course = serializers.SerializerMethodField()
+    course = cache.get("UserTrainingSerializer_queryset")
+    if not course:
+        course = serializers.SerializerMethodField()
+        cache.set("UserTrainingSerializer_queryset", course, 60 * 15)
+    
     
     class Meta:
         model = User
