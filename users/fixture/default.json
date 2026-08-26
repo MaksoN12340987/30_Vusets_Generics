@@ -1,6 +1,6 @@
 [
 {
-    "model": "users.mailingrecipient",
+    "model": "users.User",
     "pk": 1,
     "fields": {
         "password": "pbkdf2_sha256$1000000$IrTab5AkLJ8Fa8j8OyFdd6$oRcn6p7W8Pr2PIJwalj6OsHdf3LC+vfw1JS5O23pM7k=",
@@ -12,16 +12,16 @@
         "is_staff": true,
         "is_active": true,
         "date_joined": "2025-09-11T06:57:19.525Z",
-        "photo": "users/my.JPG",
-        "email": "andrianov_maksim@outlook.com",
+        "avatar": "users/my.JPG",
+        "email": "andrianov_maksim@gmail.com",
         "phone_number": null,
-        "comment": null,
         "groups": [],
-        "user_permissions": []
+        "user_permissions": [],
+        "city": "Necropolis"
     }
 },
 {
-    "model": "users.mailingrecipient",
+    "model": "users.User",
     "pk": 2,
     "fields": {
         "password": "pbkdf2_sha256$1000000$DMpHAHAhwsuKiaHLbNrxPE$5T3UWHXwsaaY2Tcj/D1H4DgPHzb73FHDFAgrwM03E5c=",
@@ -33,16 +33,16 @@
         "is_staff": false,
         "is_active": true,
         "date_joined": "2025-09-11T07:38:04.560Z",
-        "photo": "users/whie_dog.jpg",
-        "email": "user@domen.com",
+        "avatar": "users/whie_dog.jpg",
+        "email": "user_2@domen.com",
         "phone_number": "79990001122",
-        "comment": "Island",
+        "city": "Island",
         "groups": [],
         "user_permissions": []
     }
 },
 {
-    "model": "users.mailingrecipient",
+    "model": "users.User",
     "pk": 3,
     "fields": {
         "password": "pbkdf2_sha256$1000000$UAW0mnvEcmLtxF3lAK5b9z$xvc3zGd1LhwIm5El1Co0o3IcYIulIp2DZVIQL0IhQio=",
@@ -54,10 +54,10 @@
         "is_staff": false,
         "is_active": true,
         "date_joined": "2025-09-11T07:40:56.089Z",
-        "photo": "users/Sever.jpg",
-        "email": "m.andrianov.fibbee@gmail.com",
+        "avatar": "users/Sever.jpg",
+        "email": "user_3@domen.com",
         "phone_number": "79990001122",
-        "comment": "Russia",
+        "city": "Russia",
         "groups": [],
         "user_permissions": []
     }

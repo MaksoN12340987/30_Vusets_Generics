@@ -1,10 +1,10 @@
 import os
 from pathlib import Path
-from api.apps import ApiConfig
-from users.apps import UsersConfig
-from syllabus.apps import SyllabusConfig
 
 from dotenv import load_dotenv
+
+from syllabus.apps import SyllabusConfig
+from users.apps import UsersConfig
 
 load_dotenv()
 
@@ -35,7 +35,6 @@ INSTALLED_APPS = [
     "rest_framework",
     f"{UsersConfig.name}",
     f"{SyllabusConfig.name}",
-    f"{ApiConfig.name}",
 ]
 
 MIDDLEWARE = [
@@ -76,9 +75,7 @@ EMAIL_USE_TLS = True if os.getenv("EMAIL_USE_TLS") == "True" else False
 EMAIL_USE_SSL = True if os.getenv("EMAIL_USE_SSL") == "True" else False
 EMAIL_HOST_USER = os.getenv("EMAIL_HOST_USER", default="gorscheneow2018@yandex.ru")
 EMAIL_HOST_PASSWORD = os.getenv("EMAIL_HOST_PASSWORD")
-DEFAULT_FROM_EMAIL = os.getenv(
-    "DEFAULT_FROM_EMAIL", default="gorscheneow2018@yandex.ru"
-)
+DEFAULT_FROM_EMAIL = os.getenv("DEFAULT_FROM_EMAIL", default="gorscheneow2018@yandex.ru")
 
 
 # Database
@@ -141,9 +138,7 @@ DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 
 CACHES = {
     "default": {
-        "BACKEND": os.getenv(
-            "BACKEND", default="django.core.cache.backends.redis.RedisCache"
-        ),
-        "LOCATION": os.getenv("LOCATION", default="redis://127.0.0.1:6379/1"),
+        "BACKEND": os.getenv("BACKEND", default="django.core.cache.backends.redis.RedisCache"),
+        "LOCATION": os.getenv("LOCATION", default="redis://127.0.0.1:7999/1"),
     }
 }
